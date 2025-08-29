@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
+import { Note } from './entities/note.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class NotesService {
+  constructor(
+    @InjectRepository(Note)
+    private notesRepository: Repository<Note>,
+  ) {}
+  
   create(createNoteDto: CreateNoteDto) {
-    return 'This action adds a new note';
+    const note = this.notesRepository.create(createNoteDto);
+    return this.notesRepository.save(note);
   }
 
   findAll() {
-    return `This action returns all notes`;
+    return this.notesRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} note`;
+    return this.notesRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateNoteDto: UpdateNoteDto) {
-    return `This action updates a #${id} note`;
+  async update(id: number, updateNoteDto: UpdateNoteDto) {
+    await this.notesRepository.update(id, updateNoteDto);
+    return this.findOne(id);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} note`;
+    return this.notesRepository.delete(id);
   }
 }
