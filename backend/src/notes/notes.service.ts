@@ -33,4 +33,22 @@ export class NotesService {
   remove(id: number) {
     return this.notesRepository.delete(id);
   }
+
+  async archive(id: number) {
+    await this.notesRepository.update(id, { isArchived: true });
+    return this.findOne(id);
+  }
+
+  async unarchive(id: number) {
+    await this.notesRepository.update(id, { isArchived: false });
+    return this.findOne(id);
+  }
+
+  findArchived() {
+    return this.notesRepository.find({ where: { isArchived: true } });
+  }
+
+  findActive() {
+    return this.notesRepository.find({ where: { isArchived: false } });
+  } 
 }

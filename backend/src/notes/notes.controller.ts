@@ -17,6 +17,16 @@ export class NotesController {
     return this.notesService.findAll();
   }
 
+  @Get('archived')
+  findArchived() {
+    return this.notesService.findArchived();
+  }
+
+  @Get('active')
+  findActive() {
+    return this.notesService.findActive();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.notesService.findOne(+id);
@@ -30,5 +40,15 @@ export class NotesController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.notesService.remove(+id);
+  }
+
+  @Patch(':id/archive')
+  archive(@Param('id') id: string) {
+    return this.notesService.archive(+id);
+  }
+
+  @Patch(':id/unarchive') 
+  unarchive(@Param('id') id: string) {
+    return this.notesService.unarchive(+id);
   }
 }
