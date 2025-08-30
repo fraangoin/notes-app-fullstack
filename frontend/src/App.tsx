@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import api, { notesApi } from './services/api'
 import type { CreateNoteDto, Note, UpdateNoteDto } from './types/Note';
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import './App.css'
 import { CreateNoteForm } from './component/CreateNoteForm';
 import { NotesList } from './component/NotesList';
@@ -148,13 +149,20 @@ function App() {
               Archived
             </button>
           </div>
-          <NotesList 
+          {loading ? (
+            <div className="flex justify-center items-center py-8">
+              <ArrowPathIcon className="h-6 w-6 animate-spin" />
+              <span className="ml-2 text-gray-500">Loading...</span>
+            </div>
+          ) : (
+            <NotesList 
             notes={notes} 
             onEdit={handleEditNote}
             onDelete={handleDeleteNote}
             onArchive={handleArchiveNote}
             onUnarchive={handleUnarchiveNote}
           />
+          )}
           <CreateNoteForm 
             isOpen={isFormOpen}
             onClose={handleCloseForm}
