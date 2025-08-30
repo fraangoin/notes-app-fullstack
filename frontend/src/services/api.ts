@@ -22,22 +22,22 @@ export const notesApi = {
     getNoteById: (id: number) => api.get<Note>(`/notes/${id}`),
 
     // Update a note by ID
-    updateNote: (id: number, data: UpdateNoteDto) => api.put<Note>(`/notes/${id}`, data),
+    updateNote: (id: number, data: UpdateNoteDto) => api.patch<Note>(`/notes/${id}`, data),
 
     // Delete a note by ID
     deleteNote: (id: number) => api.delete<void>(`/notes/${id}`),
 
     // Archive a note by ID
-    archiveNote: (id: number) => api.post<Note>(`/notes/${id}/archive`),
+    archiveNote: (id: number) => api.patch<Note>(`/notes/${id}/archive`),
 
     // Unarchive a note by ID
-    unarchiveNote: (id: number) => api.post<Note>(`/notes/${id}/unarchive`),
+    unarchiveNote: (id: number) => api.patch<Note>(`/notes/${id}/unarchive`),
 
     // Get all archived notes
     getArchivedNotes: () => api.get<Note[]>('/notes/archived'),
 
     // Get all unarchived notes
-    getUnarchivedNotes: () => api.get<Note[]>('/notes/unarchived'),
+    getUnarchivedNotes: () => api.get<Note[]>('/notes/active'),
 
 };
 
