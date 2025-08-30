@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import api from './services/api'
 import type { Note } from './types/Note';
 import './App.css'
-import { NoteCard } from './component/NoteCard';
 import { CreateNoteForm } from './component/CreateNoteForm';
+import { NotesList } from './component/NotesList';
 
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -38,13 +38,13 @@ function App() {
           {notes.length === 0 ? (
             <p>No notes</p>
           ) : (
-            <ul>
-              {notes.map((n) => (
-                <li key={n.id}>
-                  <NoteCard note={n} onEdit={() => {}} onDelete={() => {}} onArchive={() => {}} onUnarchive={() => {}} />
-                </li>
-              ))}
-            </ul>
+            <NotesList 
+              notes={notes} 
+              onEdit={() => {}}
+              onDelete={() => {}}
+              onArchive={() => {}}
+              onUnarchive={() => {}}
+            />
           )}
           <CreateNoteForm
             isOpen={isFormOpen}
